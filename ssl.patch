@@ -1,0 +1,31 @@
+--- Python-3.9.9/Modules/_ssl.c	2021-11-15 20:43:00.000000000 +0300
++++ Python-3.9.9_gost/Modules/_ssl.c	2022-04-06 00:51:36.000000000 +0300
+@@ -13,6 +13,12 @@
+    XXX integrate several "shutdown modes" as suggested in
+        http://bugs.python.org/issue8108#msg102867 ?
+ */
++/*myfix*/
++
++#define OPENSSL_THREADS 1
++#define OPENSSL_THREAD_DEFINES
++#include <openssl/opensslconf.h>
++
+ 
+ /* Don't warn about deprecated functions, */
+ #ifndef OPENSSL_API_COMPAT
+@@ -6057,11 +6063,15 @@
+         return NULL;
+     d = PyModule_GetDict(m);
+ 
++/*myfix*/
++/*    OPENSSL_add_all_algorithms_noconf();
++*/
+     /* Load _socket module and its C API */
+     socket_api = PySocketModule_ImportModuleAndAPI();
+     if (!socket_api)
+         return NULL;
+     PySocketModule = *socket_api;
++    OPENSSL_add_all_algorithms_conf();
+ 
+ #ifndef OPENSSL_VERSION_1_1
+     /* Load all algorithms and initialize cpuid */

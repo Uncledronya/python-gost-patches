@@ -1,0 +1,16 @@
+--- Python-3.9.9/Modules/_hashopenssl.c	2021-11-15 20:43:00.000000000 +0300
++++ Python-3.9.9_gost/Modules/_hashopenssl.c	2022-04-05 23:05:58.000000000 +0300
+@@ -12,6 +12,13 @@
+  */
+ 
+ /* Don't warn about deprecated functions, */
++
++/*myfix*/
++#define OPENSSL_THREADS 1
++#define OPENSSL_THREAD_DEFINES
++#include <openssl/opensslconf.h>
++
++
+ #ifndef OPENSSL_API_COMPAT
+   // 0x10101000L == 1.1.1, 30000 == 3.0.0
+   #define OPENSSL_API_COMPAT 0x10101000L
