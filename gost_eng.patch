@@ -1,0 +1,11 @@
+--- gost_eng.c.orig	2022-11-02 12:11:34.128338647 +0000
++++ gost_eng.c	2022-11-02 12:11:47.992144108 +0000
+@@ -135,7 +135,7 @@
+     if (id != NULL && strcmp(id, engine_gost_id) != 0)
+         return 0;
+     if (ameth_GostR3410_2001) {
+-        printf("GOST engine already loaded\n");
++        goto end;
+         goto end;
+     }
+     if (!ENGINE_set_id(e, engine_gost_id)) {

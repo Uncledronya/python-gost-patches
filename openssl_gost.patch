@@ -1,0 +1,29 @@
+--- openssl.cnf.orig	2022-04-13 15:04:53.997727927 +0300
++++ openssl.cnf.gost	2022-04-13 15:06:24.642142396 +0300
+@@ -3,6 +3,7 @@
+ # This is mostly being used for generation of certificate requests.
+ #
+ 
++openssl_conf=openssl_def
+ # Note that you can include other files from the main configuration
+ # file using the .include directive.
+ #.include filename
+@@ -348,3 +349,18 @@
+ 				# (optional, default: no)
+ ess_cert_id_alg		= sha1	# algorithm to compute certificate
+ 				# identifier (optional, default: sha1)
++
++# OpenSSL default section
++[openssl_def]
++engines = engine_section
++
++# Engine scetion
++[engine_section]
++gost = gost_section
++
++# Engine gost section
++[gost_section]
++engine_id = gost
++dynamic_path = /usr/local/ssl/lib/engines-1.1/gost.so
++default_algorithms = ALL
++CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet
